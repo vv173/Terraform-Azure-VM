@@ -17,3 +17,14 @@ variable "client_secret" {
   type        = string
   description = "The Client Secret which should be used.  This also can be sourced from the service principal creation output as password"
 }
+
+variable "prefix" {
+  type        = string
+  description = "Defines prefix name for all resources."
+}
+
+variable "region" {
+  type        = string
+  description = "The Azure Region where the Resource Group should exist."
+  default     = "West Europe"
+}
