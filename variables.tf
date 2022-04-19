@@ -28,3 +28,8 @@ variable "region" {
   description = "The Azure Region where the Resource Group should exist."
   default     = "West Europe"
 }
+
+variable "internal_dns" {
+  type        = string
+  description = "Internal DNS name"
+}
