@@ -3,12 +3,6 @@ resource "azurerm_resource_group" "default" {
   location = var.region
 }
 
-resource "azurerm_network_security_group" "default" {
-  name                = "${var.prefix}-security-group"
-  location            = azurerm_resource_group.default.location
-  resource_group_name = azurerm_resource_group.default.name
-}
-
 resource "azurerm_virtual_network" "default" {
   name                = "${var.prefix}-network"
   location            = azurerm_resource_group.default.location
