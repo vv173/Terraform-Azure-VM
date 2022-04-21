@@ -33,3 +33,24 @@ variable "internal_dns" {
   type        = string
   description = "Internal DNS name"
 }
+
+variable "vm_size" {
+  type        = string
+  description = "Specifies the size of the Virtual Machine."
+  default     = "Standard_A2_v2"
+}
+
+variable "hostname" {
+  type        = string
+  description = "Specifies the name of the Virtual Machine"
+}
+
+variable "username" {
+  type        = string
+  description = "Specifies the name of the local administrator account."
+}
+
+variable "password" {
+  type        = string
+  description = "The password associated with the local administrator account."
+}

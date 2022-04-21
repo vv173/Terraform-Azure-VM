@@ -3,51 +3,43 @@ resource "azurerm_resource_group" "default" {
   location = var.region
 }
 
-resource "azurerm_virtual_network" "default" {
-  name                = "${var.prefix}-network"
+resource "azurerm_linux_virtual_machine" "default" {
+  name                = "${var.prefix}-vm"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
-  address_space       = ["10.10.0.0/16"]
+  network_interface_ids = [
+    azurerm_network_interface.default.id
+  ]
+  size                            = var.vm_size
+  encryption_at_host_enabled      = false
+  computer_name                   = var.hostname
+  disable_password_authentication = true
 
-  #Add subnet
 
-  # Tags should be added in the future.
-  # tags = {
-  #   environment = "Production"
-  # }
-}
+  admin_username = var.username
+  admin_password = var.password
+  admin_ssh_key {
+    username   = var.username
+    public_key = file("~/.ssh/azure-vm.pub")
+  }
 
-resource "azurerm_subnet" "default" {
-  name                 = "${var.prefix}-internal"
-  resource_group_name  = azurerm_resource_group.default.name
-  virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.10.2.0/24"]
-  #Security group and endpoints
-}
 
-resource "azurerm_public_ip" "default" {
-  name                = "${var.prefix}-public_ip"
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
-  allocation_method   = "Static"
-  ip_version           = "IPv6"
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+    #List variable
+  }
 
-  # tags = {
-  #   environment = "Production"
-  # }
-}
+  os_disk {
+    name                 = "${var.prefix}-disk"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
 
-resource "azurerm_network_interface" "default" {
-  name                    = "${var.prefix}-nic"
-  location                = azurerm_resource_group.default.location
-  resource_group_name     = azurerm_resource_group.default.name
-  dns_servers             = ["1.1.1.1"]
-  internal_dns_name_label = var.internal_dns
-  #public_ip_address_id = 
 
-  ip_configuration {
-    name                          = "configuration1"
-    subnet_id                     = azurerm_subnet.default.id
-    private_ip_address_allocation = "Static"
+  tags = {
+    environment = "testing"
   }
 }
