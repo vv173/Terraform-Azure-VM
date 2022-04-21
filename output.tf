@@ -3,6 +3,6 @@ output "instance_ip_addr" {
   description = "The public IP address of the VM instance."
 
   depends_on = [
-      azurerm_linux_virtual_machine.default
+    azurerm_linux_virtual_machine.default
   ]
 }

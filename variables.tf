@@ -54,3 +54,20 @@ variable "password" {
   type        = string
   description = "The password associated with the local administrator account."
 }
+
+variable "disk_size" {
+  type        = number
+  description = "The Size of the Internal OS Disk in GB, cant be smaller then 30GB."
+  default     = 30
+}
+
+variable "storage_type" {
+  type        = string
+  description = "The Type of Storage Account which should back this the Internal OS Disk."
+  default     = "Standard_LRS"
+}
+
+variable "ssh_key_path" {
+  type        = string
+  description = "Path to the SSH Public key"
+}

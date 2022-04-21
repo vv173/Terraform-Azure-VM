@@ -22,7 +22,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   admin_password = var.password
   admin_ssh_key {
     username   = var.username
-    public_key = file("~/.ssh/azure-vm.pub")
+    public_key = file(var.ssh_key_path)
   }
 
 
@@ -38,10 +38,8 @@ resource "azurerm_linux_virtual_machine" "default" {
   os_disk {
     name                 = "${var.prefix}-disk"
     caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-    #Storage type variable
-    disk_size_gb         = 32
-    #Disk size variable
+    storage_account_type = var.storage_type
+    disk_size_gb         = var.disk_size
   }
 
 
