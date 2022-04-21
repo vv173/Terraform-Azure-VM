@@ -27,11 +27,10 @@ resource "azurerm_linux_virtual_machine" "default" {
 
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
-    #List variable
+    publisher = var.os["publisher"]
+    offer     = var.os["offer"]
+    sku       = var.os["sku"]
+    version   = var.os["version"]
   }
 
 

@@ -71,3 +71,14 @@ variable "ssh_key_path" {
   type        = string
   description = "Path to the SSH Public key"
 }
+
+variable "os" {
+  description = "Specify the OS version"
+  type        = map(any)
+  default = {
+    "publisher" = "Canonical"
+    "offer"     = "0001-com-ubuntu-server-focal"
+    "sku"       = "20_04-lts-gen2"
+    "version"   = "latest"
+  }
+}
