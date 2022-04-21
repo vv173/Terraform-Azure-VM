@@ -37,7 +37,7 @@ variable "internal_dns" {
 variable "vm_size" {
   type        = string
   description = "Specifies the size of the Virtual Machine."
-  default     = "Standard_A2_v2"
+  default     = "Standard_B2s"
 }
 
 variable "hostname" {

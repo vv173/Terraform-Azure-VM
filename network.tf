@@ -11,6 +11,7 @@ resource "azurerm_virtual_network" "default" {
   }
 }
 
+
 resource "azurerm_subnet" "default" {
   name                 = "${var.prefix}-internal"
   resource_group_name  = azurerm_resource_group.default.name
@@ -18,6 +19,7 @@ resource "azurerm_subnet" "default" {
   address_prefixes     = ["10.10.2.0/24"]
   #Security group and endpoints
 }
+
 
 resource "azurerm_public_ip" "default" {
   name                = "${var.prefix}-public_ip"
@@ -31,7 +33,6 @@ resource "azurerm_public_ip" "default" {
   }
 }
 
-#azurerm_public_ip.default.ip_address
 
 resource "azurerm_network_interface" "default" {
   name                = "${var.prefix}-nic"
