@@ -43,9 +43,32 @@ resource "azurerm_network_interface" "default" {
   internal_dns_name_label = var.internal_dns
 
   ip_configuration {
-    name                          = "configuration1"
+    name                          = "configuration"
     subnet_id                     = azurerm_subnet.default.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.default.id
+  }
+}
+
+
+resource "azurerm_network_security_group" "example" {
+  name                = "StudentSecurityGroup"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+
+  security_rule {
+    name                       = "Allow port 7932 as an alternative port for the SSH server"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "7932"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  tags = {
+    environment = "testing"
   }
 }
